@@ -22,7 +22,7 @@ export default function LandingPage() {
         const d = s.val(); if (d) setAmbCount(Object.keys(d).length);
       }));
       return () => unsubs.forEach(u => u());
-    } catch { setConfigError(true); }
+    } catch (e) { console.error('Firebase init error:', e); setConfigError(true); }
   }, []);
 
   return (

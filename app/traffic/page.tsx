@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { database, ref, set, onValue, push, update, get } from '@/lib/firebase';
+import { database, ref, set, onValue, push, update, get, isConfigured } from '@/lib/firebase';
 import Link from 'next/link';
 import type { Ambulance, TrafficSignal, Hospital, IoTDevice, Zone, EmergencyRoute } from '@/components/MapSection';
 
@@ -102,6 +102,8 @@ export default function Home() {
 
   /* ═══ Firebase listeners ═══ */
   useEffect(() => {
+    if (!isConfigured) { setSystemStatus('Not configured'); return; }
+    try {
     const unsubs: (() => void)[] = [];
 
     unsubs.push(onValue(ref(database, 'signal/emergency'), s => {
@@ -155,6 +157,7 @@ export default function Home() {
 
     seedDemoData();
     return () => unsubs.forEach(u => u());
+    } catch { setSystemStatus('Firebase error'); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { database, ref, set, onValue, update, get, push } from '@/lib/firebase';
+import { database, ref, set, onValue, update, get, push, isConfigured } from '@/lib/firebase';
 import type { Ambulance, TrafficSignal, Hospital, Zone, EmergencyRoute } from '../../components/MapSection';
 import Link from 'next/link';
 
@@ -99,6 +99,8 @@ export default function AmbulanceDashboard() {
 
   /* ═══ Firebase ═══ */
   useEffect(() => {
+    if (!isConfigured) return;
+    try {
     const unsubs: (() => void)[] = [];
 
     unsubs.push(onValue(ref(database, 'signal/emergency'), s => {
@@ -144,6 +146,7 @@ export default function AmbulanceDashboard() {
     }));
 
     return () => unsubs.forEach(u => u());
+    } catch { /* Firebase not configured */ }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUnit]);
 

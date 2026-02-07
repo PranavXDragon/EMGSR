@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "signal": {
+      "emergency": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}

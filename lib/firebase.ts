@@ -16,44 +16,15 @@ import { getDatabase, ref, set, onValue, push, serverTimestamp, get, remove, upd
 */
 
 // Firebase client config (public — security enforced by Firebase Rules, not by hiding these)
-const FIREBASE_API_KEY = 'AIzaSyCl73noQmRdBtkQFwwjQebsRB6HCClu50Y';
-const FIREBASE_DB_URL = 'https://ambulance-d3adc-default-rtdb.asia-southeast1.firebasedatabase.app';
+const firebaseConfig = {
+  apiKey: 'AIzaSyCl73noQmRdBtkQFwwjQebsRB6HCClu50Y',
+  databaseURL: 'https://ambulance-d3adc-default-rtdb.asia-southeast1.firebasedatabase.app',
+};
+
 const isConfigured = true;
 
-// Lazy singleton — only initializes when first accessed at runtime
-let _app: FirebaseApp | null = null;
-let _database: Database | null = null;
-
-function getApp(): FirebaseApp {
-  if (!_app) {
-    if (!isConfigured) {
-      throw new Error('Firebase is not configured. Set NEXT_PUBLIC_FIREBASE_API_KEY and NEXT_PUBLIC_FIREBASE_DATABASE_URL environment variables.');
-    }
-    _app = getApps().length === 0
-      ? initializeApp({ apiKey: FIREBASE_API_KEY, databaseURL: FIREBASE_DB_URL })
-      : getApps()[0];
-  }
-  return _app;
-}
-
-function getDb(): Database {
-  if (!_database) {
-    _database = getDatabase(getApp());
-  }
-  return _database;
-}
-
-// Proxy object so existing `database` imports keep working without changes
-const database: Database = new Proxy({} as Database, {
-  get(_target, prop, receiver) {
-    return Reflect.get(getDb(), prop, receiver);
-  },
-});
-
-const app: FirebaseApp = new Proxy({} as FirebaseApp, {
-  get(_target, prop, receiver) {
-    return Reflect.get(getApp(), prop, receiver);
-  },
-});
+// Initialize Firebase — singleton via getApps() check
+const app: FirebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const database: Database = getDatabase(app);
 
 export { app, database, ref, set, onValue, push, serverTimestamp, get, remove, update, query, orderByChild, limitToLast, isConfigured };

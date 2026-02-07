@@ -15,9 +15,9 @@ import { getDatabase, ref, set, onValue, push, serverTimestamp, get, remove, upd
   /comms/{unitId}            — { from, text, ts }
 */
 
-// Check if Firebase is configured
-const FIREBASE_API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-const FIREBASE_DB_URL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL;
+// Firebase client config (public — security enforced by Firebase Rules, not by hiding these)
+const FIREBASE_API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyCl73noQmRdBtkQFwwjQebsRB6HCClu50Y';
+const FIREBASE_DB_URL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL || 'https://ambulance-d3adc-default-rtdb.asia-southeast1.firebasedatabase.app';
 const isConfigured = !!(FIREBASE_API_KEY && FIREBASE_DB_URL);
 
 // Lazy singleton — only initializes when first accessed at runtime

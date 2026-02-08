@@ -405,7 +405,7 @@ export default function Home() {
 
             {/* map */}
             <div className="overview-map-box" style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, border: '1px solid rgba(255,255,255,.08)', position: 'relative' }}>
-              <div className="map-wrap" style={{ height: mapExpanded ? 'calc(100vh - 260px)' : 350, transition: 'height 0.3s ease' }}>
+              <div className="map-wrap" style={{ height: mapExpanded ? 'calc(100dvh - 320px)' : 280, transition: 'height 0.3s ease' }}>
                 <MapSection ambulances={ambulances} trafficSignals={trafficSignals} hospitals={hospitals}
                   iotDevices={iotDevices} zones={zones} isEmergency={isEmergency}
                   userLocation={userLocation} activeZoneFilter={activeZoneFilter}

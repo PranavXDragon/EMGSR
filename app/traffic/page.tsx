@@ -25,7 +25,7 @@ export default function Home() {
   const [systemStatus, setSystemStatus] = useState('Connecting...');
   const [connected, setConnected] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<Tab>('map');
+  const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [darkMode] = useState(true); // control center always dark by default
   const [currentTime, setCurrentTime] = useState('');
@@ -402,11 +402,14 @@ export default function Home() {
               <span className="live">● LIVE</span>
             </div>
 
-            {/* status */}
-            <div className={`hero ${isEmergency ? 'em' : 'ok'}`}>
-              <div className="hero-ico">{isEmergency ? '🚨' : '✅'}</div>
-              <div className="hero-txt">{isEmergency ? 'Emergency Route Active' : 'Normal Traffic Flow'}</div>
-              <div className="hero-sub">{isEmergency ? 'All traffic signals cleared for ambulance passage' : 'All systems operational — Standing by'}</div>
+            {/* map */}
+            <div className="map-wrap" style={{ height: 350, borderRadius: 12, overflow: 'hidden', marginBottom: 16 }}>
+              <MapSection ambulances={ambulances} trafficSignals={trafficSignals} hospitals={hospitals}
+                iotDevices={iotDevices} zones={zones} isEmergency={isEmergency}
+                userLocation={userLocation} activeZoneFilter={activeZoneFilter}
+                onAmbulanceClick={id => setSelectedAmbulance(id)}
+                emergencyRoute={emergencyRoute}
+                focusAmbulanceId={trackedAmbulanceId} />
             </div>
 
             {/* controls */}

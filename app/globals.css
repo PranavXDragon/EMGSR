@@ -169,7 +169,7 @@ input, select, textarea { font-size: 16px; } /* prevents iOS zoom on focus */
 .lm-m { flex: 1; }
 
 /* ═══ MAP TAB ═══ */
-.map-wrap { border-radius: var(--radius); overflow: hidden; height: calc(100vh - 210px); border: 1px solid var(--border); }
+.map-wrap { border-radius: var(--radius); overflow: hidden; height: calc(100vh - 210px); border: 1px solid var(--border); isolation: isolate; z-index: 0; position: relative; }
 .map-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; flex-wrap: wrap; gap: 10px; }
 .map-filters { display: flex; gap: 6px; flex-wrap: wrap; }
 .mf-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg3); color: var(--text2); font-size: 12px; cursor: pointer; transition: all .15s; }

@@ -48,6 +48,7 @@ export default function Home() {
   /* ── GPS ── */
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [gpsStatus, setGpsStatus] = useState<'off' | 'acquiring' | 'active' | 'error'>('off');
+  const [mapExpanded, setMapExpanded] = useState(false);
   const gpsWatchRef = useRef<number | null>(null);
 
   /* ── Filters ── */
@@ -403,13 +404,21 @@ export default function Home() {
             </div>
 
             {/* map */}
-            <div className="map-wrap" style={{ height: 350, borderRadius: 12, overflow: 'hidden', marginBottom: 16 }}>
-              <MapSection ambulances={ambulances} trafficSignals={trafficSignals} hospitals={hospitals}
-                iotDevices={iotDevices} zones={zones} isEmergency={isEmergency}
-                userLocation={userLocation} activeZoneFilter={activeZoneFilter}
-                onAmbulanceClick={id => setSelectedAmbulance(id)}
-                emergencyRoute={emergencyRoute}
-                focusAmbulanceId={trackedAmbulanceId} />
+            <div className="overview-map-box" style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, border: '1px solid rgba(255,255,255,.08)', position: 'relative' }}>
+              <div className="map-wrap" style={{ height: mapExpanded ? 'calc(100vh - 260px)' : 350, transition: 'height 0.3s ease' }}>
+                <MapSection ambulances={ambulances} trafficSignals={trafficSignals} hospitals={hospitals}
+                  iotDevices={iotDevices} zones={zones} isEmergency={isEmergency}
+                  userLocation={userLocation} activeZoneFilter={activeZoneFilter}
+                  onAmbulanceClick={id => setSelectedAmbulance(id)}
+                  emergencyRoute={emergencyRoute}
+                  focusAmbulanceId={trackedAmbulanceId} />
+              </div>
+              <button
+                onClick={() => setMapExpanded(e => !e)}
+                style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000, background: 'rgba(15,23,42,.85)', border: '1px solid rgba(255,255,255,.15)', borderRadius: 8, color: '#94a3b8', padding: '6px 12px', cursor: 'pointer', fontSize: 13, backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', gap: 6 }}
+              >
+                {mapExpanded ? '↙ Collapse' : '↗ Expand'}
+              </button>
             </div>
 
             {/* controls */}

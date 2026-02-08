@@ -267,7 +267,7 @@ export default function MapSection({
     layersRef.current = layers;
     routeLayerRef.current = routeLayer;
 
-    setTimeout(() => map.invalidateSize(), 250);
+    setTimeout(() => { if (mapRef.current) mapRef.current.invalidateSize(); }, 250);
 
     return () => {
       map.remove();

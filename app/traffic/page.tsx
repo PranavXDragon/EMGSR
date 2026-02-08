@@ -25,7 +25,7 @@ export default function Home() {
   const [systemStatus, setSystemStatus] = useState('Connecting...');
   const [connected, setConnected] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const [activeTab, setActiveTab] = useState<Tab>('map');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [darkMode] = useState(true); // control center always dark by default
   const [currentTime, setCurrentTime] = useState('');
